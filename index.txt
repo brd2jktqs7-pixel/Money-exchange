@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global Money Transfer</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-globe"></i>
+                <span>Global Money Transfer</span>
+            </div>
+            <div class="nav-links">
+                <a href="#" class="nav-link" onclick="showSection('dashboard')"><i class="fas fa-home"></i> Dashboard</a>
+                <a href="#" class="nav-link" onclick="showSection('send-invoice')"><i class="fas fa-file-invoice"></i> Send Invoice</a>
+                <a href="#" class="nav-link" onclick="showSection('send-money')"><i class="fas fa-paper-plane"></i> Send Money</a>
+                <a href="#" class="nav-link" onclick="showSection('transactions')"><i class="fas fa-history"></i> Transactions</a>
+                <a href="#" class="nav-link" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <section id="login" class="section active">
+            <div class="login-container">
+                <div class="login-card">
+                    <h2><i class="fas fa-lock"></i> User Login</h2>
+                    <form id="loginForm">
+                        <div class="form-group">
+                            <label for="email"><i class="fas fa-envelope"></i> Email</label>
+                            <input type="email" id="email" required placeholder="Enter your email" value="demo@example.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="password"><i class="fas fa-key"></i> Password</label>
+                            <input type="password" id="password" required placeholder="Enter your password" value="password">
+                        </div>
+                        <button type="submit" class="btn-primary">Login</button>
+                    </form>
+                    <p class="register-link">
+                        Don't have an account? <a href="#" onclick="showRegistration()">Register here</a>
+                    </p>
+                    <div class="demo-login">
+                        <button type="button" class="btn-secondary" onclick="demoLogin()">
+                            <i class="fas fa-rocket"></i> Quick Demo Login
+                        </button>
+                        <p class="demo-note">Use any email/password for testing</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="dashboard" class="section">
+            <div class="dashboard-header">
+                <h1><i class="fas fa-wallet"></i> My Wallet</h1>
+                <p>Manage your multi-currency balances</p>
+            </div>
+
+            <div class="balances-grid">
+                <div class="balance-card">
+                    <div class="currency-flag">🇺🇸</div>
+                    <h3>USD Balance</h3>
+                    <div class="balance-amount">$<span id="usdBalance">0.00</span></div>
+                    <div class="balance-details">
+                        <div class="balance-type">
+                            <span>Available: $<span id="usdAvailable">0.00</span></span>
+                        </div>
+                        <div class="balance-type">
+                            <span>Hold: $<span id="usdHold">0.00</span></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="balance-card">
+                    <div class="currency-flag">🇪🇺</div>
+                    <h3>EUR Balance</h3>
+                    <div class="balance-amount">€<span id="eurBalance">0.00</span></div>
+                    <div class="balance-details">
+                        <div class="balance-type">
+                            <span>Available: €<span id="eurAvailable">0.00</span></span>
+                        </div>
+                        <div class="balance-type">
+                            <span>Hold: €<span id="eurHold">0.00</span></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="balance-card">
+                    <div class="currency-flag">🇵🇰</div>
+                    <h3>PKR Balance</h3>
+                    <div class="balance-amount">₨<span id="pkrBalance">0.00</span></div>
+                    <div class="balance-details">
+                        <div class="balance-type">
+                            <span>Available: ₨<span id="pkrAvailable">0.00</span></span>
+                        </div>
+                        <div class="balance-type">
+                            <span>Hold: ₨<span id="pkrHold">0.00</span></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="balance-card">
+                    <div class="currency-flag">🇹🇭</div>
+                    <h3>THB Balance</h3>
+                    <div class="balance-amount">฿<span id="thbBalance">0.00</span></div>
+                    <div class="balance-details">
+                        <div class="balance-type">
+                            <span>Available: ฿<span id="thbAvailable">0.00</span></span>
+                        </div>
+                        <div class="balance-type">
+                            <span>Hold: ฿<span id="thbHold">0.00</span></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="quick-actions">
+                <button class="action-btn" onclick="showSection('send-invoice')">
+                    <i class="fas fa-file-invoice-dollar"></i>
+                    <span>Send PayPal Invoice</span>
+                </button>
+                <button class="action-btn" onclick="showSection('send-money')">
+                    <i class="fas fa-money-bill-transfer"></i>
+                    <span>Send Money Worldwide</span>
+                </button>
+                <button class="action-btn" onclick="showSection('transactions')">
+                    <i class="fas fa-history"></i>
+                    <span>Transaction History</span>
+                </button>
+            </div>
+        </section>
+
+        <section id="send-invoice" class="section">
+            <div class="section-header">
+                <h1><i class="fas fa-file-invoice-dollar"></i> Send PayPal Invoice</h1>
+                <p>Create and send invoices to receive payments</p>
+            </div>
+
+            <div class="invoice-form">
+                <form id="invoiceForm">
+                    <div class="form-group">
+                        <label for="recipientEmail"><i class="fas fa-envelope"></i> Recipient Email</label>
+                        <input type="email" id="recipientEmail" required placeholder="customer@example.com" value="test@example.com">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="invoiceAmount"><i class="fas fa-dollar-sign"></i> Amount (USD)</label>
+                        <input type="number" id="invoiceAmount" required placeholder="100.00" step="0.01" min="1" value="100">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="itemDescription"><i class="fas fa-file-alt"></i> Item Description</label>
+                        <textarea id="itemDescription" required placeholder="Describe the product or service..." rows="3">Web Development Services</textarea>
+                    </div>
+
+                    <div class="fee-calculation">
+                        <div class="fee-breakdown">
+                            <div class="fee-item">
+                                <span>Invoice Amount:</span>
+                                <span>$<span id="displayAmount">0.00</span></span>
+                            </div>
+                            <div class="fee-item">
+                                <span>Platform Fee (<span id="feePercentage">2.5</span>%):</span>
+                                <span>-$<span id="feeAmount">0.00</span></span>
+                            </div>
+                            <div class="fee-total">
+                                <span><strong>You Will Receive:</strong></span>
+                                <span><strong>$<span id="netAmount">0.00</span></strong></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-primary">
+                        <i class="fab fa-paypal"></i> Send PayPal Invoice
+                    </button>
+                </form>
+            </div>
+        </section>
+
+        <section id="send-money" class="section">
+            <div class="section-header">
+                <h1><i class="fas fa-money-bill-transfer"></i> Send Money Worldwide</h1>
+                <p>Transfer funds between any countries</p>
+            </div>
+
+            <div class="transfer-form">
+                <form id="transferForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="fromCountry"><i class="fas fa-map-marker-alt"></i> From Country</label>
+                            <select id="fromCountry" required>
+                                <option value="">Select Sending Country</option>
+                                <option value="PK" selected>🇵🇰 Pakistan - PKR</option>
+                                <option value="IN">🇮🇳 India - INR</option>
+                                <option value="TH">🇹🇭 Thailand - THB</option>
+                                <option value="AE">🇦🇪 UAE - AED</option>
+                                <option value="SA">🇸🇦 Saudi Arabia - SAR</option>
+                                <option value="US">🇺🇸 USA - USD</option>
+                                <option value="GB">🇬🇧 UK - GBP</option>
+                                <option value="DE">🇩🇪 Germany - EUR</option>
+                                <option value="CA">🇨🇦 Canada - CAD</option>
+                                <option value="AU">🇦🇺 Australia - AUD</option>
+                                <option value="JP">🇯🇵 Japan - JPY</option>
+                                <option value="CN">🇨🇳 China - CNY</option>
+                                <option value="SG">🇸🇬 Singapore - SGD</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="toCountry"><i class="fas fa-location-arrow"></i> To Country</label>
+                            <select id="toCountry" required>
+                                <option value="">Select Receiving Country</option>
+                                <option value="PK">🇵🇰 Pakistan - PKR</option>
+                                <option value="IN">🇮🇳 India - INR</option>
+                                <option value="TH" selected>🇹🇭 Thailand - THB</option>
+                                <option value="AE">🇦🇪 UAE - AED</option>
+                                <option value="SA">🇸🇦 Saudi Arabia - SAR</option>
+                                <option value="US">🇺🇸 USA - USD</option>
+                                <option value="GB">🇬🇧 UK - GBP</option>
+                                <option value="DE">🇩🇪 Germany - EUR</option>
+                                <option value="CA">🇨🇦 Canada - CAD</option>
+                                <option value="AU">🇦🇺 Australia - AUD</option>
+                                <option value="JP">🇯🇵 Japan - JPY</option>
+                                <option value="CN">🇨🇳 China - CNY</option>
+                                <option value="SG">🇸🇬 Singapore - SGD</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="sendAmount"><i class="fas fa-money-bill-wave"></i> Amount to Send</label>
+                        <div class="amount-input-container">
+                            <input type="number" id="sendAmount" required placeholder="Enter amount" min="1" value="1000">
+                            <span class="currency-label" id="sendCurrency">PKR</span>
+                        </div>
+                    </div>
+
+                    <div class="exchange-rate">
+                        <div class="rate-info">
+                            <span>Exchange Rate:</span>
+                            <span id="exchangeRate">1 PKR = 0.30 THB</span>
+                        </div>
+                        <div class="receive-amount">
+                            <span>Receiver Will Get:</span>
+                            <span id="receiveAmount">0.00 THB</span>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn-primary">
+                            <i class="fas fa-paper-plane"></i> Continue Transaction
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <section id="transactions" class="section">
+            <div class="section-header">
+                <h1><i class="fas fa-history"></i> Transaction History</h1>
+                <p>View all your transactions and their status</p>
+            </div>
+
+            <div class="transactions-list">
+                <div class="transaction-filters">
+                    <button class="filter-btn active" onclick="filterTransactions('all')">All</button>
+                    <button class="filter-btn" onclick="filterTransactions('pending')">Pending</button>
+                    <button class="filter-btn" onclick="filterTransactions('completed')">Completed</button>
+                </div>
+
+                <div class="transactions-container" id="transactionsContainer">
+                    <div class="no-transactions">
+                        <i class="fas fa-receipt"></i>
+                        <p>No transactions yet</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
